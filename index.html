@@ -207,8 +207,8 @@ function layout() {
   // 底部控制列：5 顆大按鈕
   var by = H - ctrlH - 6, bh = ctrlH - 10, bw = (W - 16 - 4 * 6) / 5, i;
   CTRL = [];
-  var labels = ['左移', '右移', '旋轉', '軟降', '直落'];
-  var acts = ['left', 'right', 'rot', 'soft', 'hard'];
+  var labels = ['旋轉', '左移', '右移', '軟降', '直落'];
+  var acts = ['rot', 'left', 'right', 'soft', 'hard'];
   for (i = 0; i < 5; i++) { CTRL.push({ x: 8 + i * (bw + 6), y: by, w: bw, h: bh, a: acts[i], l: labels[i] }); }
   BTN.pause = { x: W - 46, y: 8, w: 38, h: hudH - 16 };
   BTN.sfx = { x: W - 88, y: 8, w: 38, h: hudH - 16 };
@@ -487,8 +487,9 @@ function drawCtrl() {
     if (b.a === 'left' || b.a === 'right') {
       var dir = b.a === 'left' ? -1 : 1;
       ctx.beginPath();
-      ctx.moveTo(cx + dir * r * 0.9, cy - r); ctx.lineTo(cx - dir * r * 0.9, cy); ctx.lineTo(cx + dir * r * 0.9, cy + r);
+      ctx.moveTo(cx - dir * r * 0.85, cy - r); ctx.lineTo(cx + dir * r * 0.95, cy); ctx.lineTo(cx - dir * r * 0.85, cy + r);
       ctx.closePath(); ctx.fill();
+      ctx.fillRect(cx - dir * r * 1.35, cy - r * 0.22, r * 0.5, r * 0.44);
     } else if (b.a === 'rot') {
       ctx.beginPath(); ctx.arc(cx, cy, r, -1.1, 3.6); ctx.stroke();
       var ea = 3.6;
@@ -498,16 +499,18 @@ function drawCtrl() {
       ctx.lineTo(cx + Math.cos(ea) * r + r * 0.12, cy + Math.sin(ea) * r + r * 0.6);
       ctx.closePath(); ctx.fill();
     } else if (b.a === 'soft') {
+      // ↓ 軟降：單一向下箭頭
       ctx.beginPath();
-      ctx.moveTo(cx, cy + r); ctx.lineTo(cx - r * 0.9, cy - r * 0.5); ctx.lineTo(cx + r * 0.9, cy - r * 0.5);
+      ctx.moveTo(cx, cy + r * 1.05); ctx.lineTo(cx - r * 0.92, cy - r * 0.45); ctx.lineTo(cx + r * 0.92, cy - r * 0.45);
       ctx.closePath(); ctx.fill();
-      ctx.fillRect(cx - r * 1.1, cy - r * 1.15, r * 2.2, r * 0.4);
+      ctx.fillRect(cx - r * 0.23, cy - r * 1.5, r * 0.46, r * 1.15);
     } else {
+      // ⤓ 直落：向下箭頭＋地板線
       ctx.beginPath();
-      ctx.moveTo(cx, cy + r * 1.15); ctx.lineTo(cx - r * 0.9, cy - r * 0.3); ctx.lineTo(cx + r * 0.9, cy - r * 0.3);
+      ctx.moveTo(cx, cy + r * 0.72); ctx.lineTo(cx - r * 0.9, cy - r * 0.78); ctx.lineTo(cx + r * 0.9, cy - r * 0.78);
       ctx.closePath(); ctx.fill();
-      ctx.fillRect(cx - r * 1.15, cy - r * 1.0, r * 2.3, r * 0.4);
-      ctx.beginPath(); ctx.moveTo(cx - r * 1.15, cy - r * 0.35); ctx.lineTo(cx + r * 1.15, cy - r * 0.35); ctx.stroke();
+      ctx.fillRect(cx - r * 0.23, cy - r * 1.5, r * 0.46, r * 0.78);
+      ctx.fillRect(cx - r * 1.15, cy + r * 1.02, r * 2.3, r * 0.42);
     }
     ctx.restore();
     txt(b.l, cx, b.y + b.h * 0.80, Math.round(clamp(b.h * 0.20, 11, 15)), '#dff4ff', 'center', 600);
