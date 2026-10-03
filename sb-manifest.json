@@ -1,0 +1,17 @@
+{
+  "name": "海綿寶寶俄羅斯方塊",
+  "short_name": "海綿方塊",
+  "description": "海底主題俄羅斯方塊：蟹堡、水母、鳳梨都變成方塊，手機單手玩",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#052435",
+  "theme_color": "#0a4a6b",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "sb-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "sb-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "sb-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
